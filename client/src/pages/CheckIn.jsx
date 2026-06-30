@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
+
 import { useAuth } from '../context/AuthContext';
 import { Bed, BookOpen, Monitor, FolderKanban, Code2, Flame, Award, ArrowLeft } from 'lucide-react';
 
@@ -54,7 +55,8 @@ const CheckIn = () => {
     setError('');
 
     try {
-      const res = await axios.post('/api/checkin', metrics);
+      const res = await api.post('/api/checkin', metrics);
+
       if (res.data.success) {
         const { streak, newBadges } = res.data.data;
         

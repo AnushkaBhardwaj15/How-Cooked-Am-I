@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
+
 
 const AuthContext = createContext();
 
@@ -7,8 +8,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Set default axios base URL (optional since we proxy in Vite, but good for cleanliness)
-  axios.defaults.baseURL = '';
 
   useEffect(() => {
     const storedUser = localStorage.getItem('cooked_user');
@@ -16,7 +15,8 @@ export const AuthProvider = ({ children }) => {
       const parsed = JSON.parse(storedUser);
       setUser(parsed);
       if (parsed.token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${parsed.token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${parsed.token}`;
+
       }
     }
     setLoading(false);
@@ -25,12 +25,14 @@ export const AuthProvider = ({ children }) => {
   // Login handler
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await api.post('/api/auth/login', { email, password });
+
       if (response.data.success) {
         const userData = response.data.data;
         setUser(userData);
         localStorage.setItem('cooked_user', JSON.stringify(userData));
-        axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+        api.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+
         return { success: true };
       }
     } catch (error) {
@@ -44,7 +46,8 @@ export const AuthProvider = ({ children }) => {
   // Register handler
   const register = async (name, email, password, collegeName, branch, yearOfStudy) => {
     try {
-      const response = await axios.post('/api/auth/register', {
+      const response = await api.post('/api/auth/register', {
+
         name,
         email,
         password,
@@ -56,7 +59,7 @@ export const AuthProvider = ({ children }) => {
         const userData = response.data.data;
         setUser(userData);
         localStorage.setItem('cooked_user', JSON.stringify(userData));
-        axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+        api.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
         return { success: true };
       }
     } catch (error) {
@@ -70,7 +73,8 @@ export const AuthProvider = ({ children }) => {
   // Save profile setup details
   const saveProfile = async (learningAreas, goals) => {
     try {
-      const response = await axios.put('/api/auth/profile', { learningAreas, goals });
+      const response = await api.put('/api/auth/profile', { learningAreas, goals });
+
       if (response.data.success) {
         const updatedProfile = response.data.data.profileSetup;
         const updatedUser = {
@@ -103,7 +107,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('cooked_user');
-    delete axios.defaults.headers.common['Authorization'];
+    delete api.defaults.headers.common['Authorization'];
+
   };
 
   return (

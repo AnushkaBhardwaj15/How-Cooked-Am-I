@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
+
 import { useAuth } from '../context/AuthContext';
 import { 
   Flame, Award, AlertCircle, RefreshCw, ClipboardList, CheckCircle2,
@@ -24,7 +25,8 @@ const Dashboard = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.get('/api/dashboard/stats');
+      const res = await api.get('/api/dashboard/stats');
+
       if (res.data.success) {
         setData(res.data.data);
       }

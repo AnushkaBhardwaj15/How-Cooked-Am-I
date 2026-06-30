@@ -10,10 +10,10 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: CLIENT_ORIGIN
+        value: https://how-cooked-am-i-zeta.vercel.app
       - key: MONGODB_URI
-        sync: false          # Set this manually in the Render dashboard
+        sync: false          # Paste your Atlas URI in the Render dashboard
       - key: JWT_SECRET
         generateValue: true  # Render auto-generates a secure random value
-      - key: CLIENT_ORIGIN
-        sync: false          # Set to your frontend URL after deploying it
     autoDeploy: true
