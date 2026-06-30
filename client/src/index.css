@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color: #020617;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --glass-bg: rgba(15, 23, 42, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --input-bg: rgba(15, 23, 42, 0.5);
+  --input-border: rgba(255, 255, 255, 0.06);
+  --input-text: #f1f5f9;
+  --radial-1: rgba(244, 63, 94, 0.05);
+  --radial-2: rgba(59, 130, 246, 0.05);
+  --radial-3: rgba(168, 85, 247, 0.05);
+  --border-color: rgba(255, 255, 255, 0.05);
+}
+
+html.light {
+  --bg-color: #f8fafc; /* Slate-50 */
+  --text-primary: #0f172a; /* Slate-900 */
+  --text-secondary: #475569; /* Slate-600 */
+  --text-muted: #94a3b8; /* Slate-400 */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --input-bg: rgba(241, 245, 249, 0.9);
+  --input-border: rgba(15, 23, 42, 0.08);
+  --input-text: #0f172a;
+  --radial-1: rgba(251, 146, 60, 0.08); /* warm orange/red */
+  --radial-2: rgba(96, 165, 250, 0.08); /* blue */
+  --radial-3: rgba(192, 132, 252, 0.08); /* purple */
+  --border-color: rgba(15, 23, 42, 0.06);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    background-image: 
+      radial-gradient(at 0% 0%, var(--radial-1) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, var(--radial-2) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, var(--radial-3) 0px, transparent 50%);
+    background-attachment: fixed;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Override text colors globally for light/dark transition */
+  .text-slate-100 {
+    color: var(--text-primary) !important;
+  }
+  .text-slate-200 {
+    color: var(--text-primary) !important;
+  }
+  .text-slate-300 {
+    color: var(--text-secondary) !important;
+  }
+  .text-slate-400 {
+    color: var(--text-secondary) !important;
+  }
+  .text-slate-500 {
+    color: var(--text-muted) !important;
+  }
+  .border-white\/5 {
+    border-color: var(--border-color) !important;
+  }
+  .border-white\/10 {
+    border-color: var(--border-color) !important;
+  }
+
+  /* Ensure inputs/select elements match the theme */
+  input, select, textarea {
+    background-color: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--input-text) !important;
+    transition: all 0.3s ease;
+  }
+  input::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.8;
+  }
+}
+
+/* Glassmorphism Panel styles */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: var(--glass-bg);
+  opacity: 0.95;
+  border-color: var(--glass-border);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Glowing text */
+.glow-text-cooked {
+  text-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+}
+
+.glow-text-warning {
+  text-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+}
+
+.glow-text-safe {
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+}
+
+/* Custom animations */
+@keyframes flame-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.5)) drop-shadow(0 0 10px rgba(239, 68, 68, 0.7));
+  }
+  50% {
+    transform: scale(1.1) rotate(-3deg);
+    filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.8)) drop-shadow(0 0 15px rgba(239, 68, 68, 0.9));
+  }
+}
+
+.flame-animation {
+  animation: flame-pulse 2s infinite ease-in-out;
+}
+
+@keyframes grid-glow {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.bg-grid-effect {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  animation: grid-glow 8s infinite ease-in-out;
+}
+
+/* Hide scrollbar for clean dashboard view */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

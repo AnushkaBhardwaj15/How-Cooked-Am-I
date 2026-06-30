@@ -1,0 +1,55 @@
+{
+  "users": [
+    {
+      "name": "Anushka Bhardwaj",
+      "email": "anushkarsbhardwaj@gmail.com",
+      "password": "$2a$10$Isg5hkEq7pCLYUZXIpqoI.ITAoXOvrUmnWS.VpfXEOZRod3amwltK",
+      "collegeName": "Medicaps",
+      "branch": "CSE",
+      "yearOfStudy": 1,
+      "profileSetup": {
+        "learningAreas": [
+          "Frontend"
+        ],
+        "goals": [
+          "Internship",
+          "Hackathon",
+          "Open Source"
+        ],
+        "isComplete": true
+      },
+      "streak": {
+        "count": 0,
+        "lastCheckInDate": null
+      },
+      "achievements": [
+        {
+          "badge": "NIGHT_OWL",
+          "title": "Night Owl 🦉",
+          "description": "Slept for less than 4 hours. Coffee is your water now.",
+          "unlockedAt": "2026-06-30T12:02:23.913Z",
+          "_id": "6a43b04f38ccba468e056e09"
+        }
+      ],
+      "_id": "cba1e7e565de8f7f867c1aa0",
+      "createdAt": "2026-06-30T11:43:14.240Z",
+      "updatedAt": "2026-06-30T12:15:56.477Z"
+    }
+  ],
+  "checkins": [
+    {
+      "userId": "cba1e7e565de8f7f867c1aa0",
+      "date": "2026-06-30",
+      "sleepHours": 4,
+      "studyHours": 8,
+      "screenTime": 6,
+      "assignments": 7,
+      "dsaSolved": 0,
+      "cookedScore": 65,
+      "archetype": "The Grinder",
+      "_id": "81653ca204b628118cb0050f",
+      "createdAt": "2026-06-30T11:43:45.734Z",
+      "updatedAt": "2026-06-30T12:15:56.272Z"
+    }
+  ]
+}

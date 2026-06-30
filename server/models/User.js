@@ -1,0 +1,98 @@
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please add a name']
+  },
+  email: {
+    type: String,
+    required: [true, 'Please add an email'],
+    unique: true,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      'Please add a valid email'
+    ]
+  },
+  password: {
+    type: String,
+    required: [true, 'Please add a password'],
+    minlength: 6,
+    select: false
+  },
+  collegeName: {
+    type: String,
+    required: [true, 'Please add a college name']
+  },
+  branch: {
+    type: String,
+    required: [true, 'Please add a branch']
+  },
+  yearOfStudy: {
+    type: Number,
+    required: [true, 'Please add a year of study']
+  },
+  profileSetup: {
+    learningAreas: {
+      type: [String],
+      default: []
+    },
+    goals: {
+      type: [String],
+      default: []
+    },
+    isComplete: {
+      type: Boolean,
+      default: false
+    }
+  },
+  streak: {
+    count: {
+      type: Number,
+      default: 0
+    },
+    lastCheckInDate: {
+      type: String, // Store as YYYY-MM-DD string to avoid timezone/DST shifts
+      default: null
+    }
+  },
+  achievements: [
+    {
+      badge: {
+        type: String,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true
+      },
+      description: {
+        type: String,
+        required: true
+      },
+      unlockedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ]
+}, {
+  timestamps: true
+});
+
+// Encrypt password using bcrypt
+UserSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Match user entered password to hashed password in database
+UserSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+module.exports = mongoose.model('User', UserSchema);
